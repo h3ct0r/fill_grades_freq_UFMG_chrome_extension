@@ -1,0 +1,48 @@
+{
+    "manifest_version": 3,
+    "name": "CSV Grade Filler - UFMG",
+    "version": "1.0",
+    "description": "Fills forms on a specific website using a CSV file.",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "commands",
+        "tabs"
+    ],
+    "background": {
+        "service_worker": "service.js",
+        "type": "module"
+    },
+    "commands": {
+        "reload": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+E",
+                "mac": "Command+Shift+E"
+            },
+            "description": "Reload the extension"
+        }
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://localhost/*",
+                "*://sistemas.ufmg.br/diario/notaTurma/notaAvaliacao/solicitar/*",
+                "*://sistemas.ufmg.br/diario/frequenciaTurma/frequencia/solicitar/*"
+            ],
+            "js": [
+                "js/papaparse.min.js",
+                "content.js"
+            ],
+            "run_at": "document_end"
+        }
+    ]
+}
