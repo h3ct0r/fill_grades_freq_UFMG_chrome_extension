@@ -52,6 +52,8 @@ Download this Github project and load it in Chrome using developer mode as an un
 
 ## Step by step tutorial
 
+Test website at: https://homepages.dcc.ufmg.br/~hector.azpurua/notas_mock
+
 - *Step 0*: Inside `Diario de Classe`, go to the page `Notas/Lançamento de Notas/Todas as Avaliações` and click on the extension icon
 <div align="center">
   <img src="https://github.com/user-attachments/assets/6602d9fd-0c56-40f6-8383-c3dbb8652030" alt="Step 0" style="text-align:center; width:25%">
