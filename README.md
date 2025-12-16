@@ -26,11 +26,11 @@ This project shares a reference Google Sheets template to use with the plugin an
 - Link: https://docs.google.com/spreadsheets/d/1f_me6U-Ha-TknAIA9YQtypiudQb4HLF3AGMMo_i_Prs/edit?usp=sharing
 
 <div align="center">
-    <a href="[https://www.youtube.com/watch?v=9LEHnoVBfvQ](https://docs.google.com/spreadsheets/d/1f_me6U-Ha-TknAIA9YQtypiudQb4HLF3AGMMo_i_Prs/edit?usp=sharing)" target="_blank">
-    <img src="https://github.com/user-attachments/assets/feec7f8e-29f1-40f7-a53c-7447ca70ef8d" alt="Extension gui" style="text-align:center; width:25%">
-      </a>
+    <a href="https://docs.google.com/spreadsheets/d/1f_me6U-Ha-TknAIA9YQtypiudQb4HLF3AGMMo_i_Prs/edit?usp=sharing" target="_blank">
+      <img src="https://github.com/user-attachments/assets/feec7f8e-29f1-40f7-a53c-7447ca70ef8d" alt="Extension gui" style="text-align:center; width:25%">
+    </a>
     <br>
-    Reference Google Sheets template
+    Reference Google Sheets template.
 </div>
 
 ## How to install
