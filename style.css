@@ -72,3 +72,23 @@ button:disabled {
 .green-color {
     color: green;
 }
+
+.container {
+    content: "";
+    display: table;
+    clear: both;
+    /* Pushes items to the edges */
+    width: 100%;
+}
+
+.left-content {
+    text-align: left;
+    width: 60%;
+    float: left;
+}
+
+.right-content {
+    text-align: right;
+    width: 36%;
+    float: right;
+}

@@ -36,7 +36,8 @@
             "matches": [
                 "*://localhost/*",
                 "*://sistemas.ufmg.br/diario/notaTurma/notaAvaliacao/solicitar/*",
-                "*://sistemas.ufmg.br/diario/frequenciaTurma/frequencia/solicitar/*"
+                "*://sistemas.ufmg.br/diario/frequenciaTurma/frequencia/solicitar/*",
+                "*://homepages.dcc.ufmg.br/~hector.azpurua/*"
             ],
             "js": [
                 "js/papaparse.min.js",
