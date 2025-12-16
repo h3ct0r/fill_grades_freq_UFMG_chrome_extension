@@ -10,7 +10,47 @@ This project also includes a Google Sheets template to import the users from Moo
   Interface of the plugin once open at the correct `Diario de Classe` webpage.
 </div>
 
-## How does it work?
+<br>
+
+<div align="center">
+ <a href="https://www.youtube.com/watch?v=9LEHnoVBfvQ" target="_blank">
+      <img src="https://github.com/user-attachments/assets/85984edd-24ee-4ce0-8982-920510993360" alt="Youtube video tutorial" style="text-align:center; width:45%">
+    </a>
+  <br>
+  Quick video tutorial of the plugin doing its magic.
+</div>
+
+## Reference Google Sheets template
+
+This project shares a reference Google Sheets template to use with the plugin and make easier to create the CSV files, however its not required and you can use any way you prefer to generate the CSV files.
+- Link: https://docs.google.com/spreadsheets/d/1f_me6U-Ha-TknAIA9YQtypiudQb4HLF3AGMMo_i_Prs/edit?usp=sharing
+
+<div align="center">
+    <a href="[https://www.youtube.com/watch?v=9LEHnoVBfvQ](https://docs.google.com/spreadsheets/d/1f_me6U-Ha-TknAIA9YQtypiudQb4HLF3AGMMo_i_Prs/edit?usp=sharing)" target="_blank">
+    <img src="https://github.com/user-attachments/assets/feec7f8e-29f1-40f7-a53c-7447ca70ef8d" alt="Extension gui" style="text-align:center; width:25%">
+      </a>
+    <br>
+    Reference Google Sheets template
+</div>
+
+## How to install
+
+Download this Github project and load it in Chrome using developer mode as an unpacked extension:
+
+- Go to the Extensions page by entering `chrome://extensions` in a new tab. (By design chrome:// URLs are not linkable.)
+    - Alternatively, click the Extensions menu puzzle button and select **Manage Extensions** at the bottom of the menu.
+    - Or, click the Chrome menu, hover over **More Tools**, then select **Extensions**.
+- Enable **Developer Mode** by clicking the toggle switch next to **Developer mode**.
+- Click the **Load unpacked** button and select the extension directory.
+  
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e805db63-afce-4996-9166-108b12a4675c" alt="Extensions" style="text-align:center; width:25%">
+  <br>
+  Extensions page (`chrome://extensions`)
+</div>
+- Ta-da! The extension has been successfully installed.
+
+## Step by step tutorial
 
 - *Step 0*: Inside `Diario de Classe`, go to the page `Notas/Lançamento de Notas/Todas as Avaliações` and click on the extension icon
 <div align="center">
@@ -34,10 +74,9 @@ This project also includes a Google Sheets template to import the users from Moo
 
 - Remember to click the `Processar` button at the bottom of the page to register all grades
 
-## Video tutorial
+## License
 
-<div align="center">
-    <a href="https://www.youtube.com/watch?v=9LEHnoVBfvQ" target="_blank">
-      <img src="https://github.com/user-attachments/assets/85984edd-24ee-4ce0-8982-920510993360" alt="Youtube video tutorial" style="text-align:center; width:45%">
-    </a>
-</div>
+MIT
+
+**Free Software, Hell Yeah!**
+   
