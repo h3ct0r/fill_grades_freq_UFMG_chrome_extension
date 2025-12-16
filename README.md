@@ -20,6 +20,12 @@ This project also includes a Google Sheets template to import the users from Moo
   Quick video tutorial of the plugin doing its magic.
 </div>
 
+### Acknowledgements
+
+This project is based upon the developments of:
+- [Prof. Flavio Figueiredo](https://dcc.ufmg.br/professor/flavio-vinicius-diniz-de-figueiredo/) and its automatic filler using Python3 https://github.com/flaviovdf/preenche-notas-ufmg
+- And the spreadsheets/organization efforts from Prof. [Douglas G. Macharet](https://dcc.ufmg.br/professor/douglas-guimaraes-macharet/).
+
 ## Reference Google Sheets template
 
 This project shares a reference Google Sheets template to use with the plugin and make easier to create the CSV files, however its not required and you can use any way you prefer to generate the CSV files.
