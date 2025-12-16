@@ -3,7 +3,7 @@
 
 This project is a JS Chrome Extension that works on certain URL's to allow the option of automatically filling students grades and frequency by directly importing a CSV files with the evaluation and frequency data. 
 
-This project also includes a Google Sheets template to import the users from Moodle and `Diario de Classe`, joining them by name. This template can be used to fill the grades during the semester, and export it to CSV.'
+This project also includes a Google Sheets template to import the users from Moodle and `Diario de Classe`, joining them by name. This template can be used to fill the grades during the semester, and export it to CSV.
 <div align="center">
   <img src="https://github.com/user-attachments/assets/1b4fb10b-2852-4c5f-8512-db614cc4c756" alt="Extension gui" style="text-align:center; width:25%">
   <br>
