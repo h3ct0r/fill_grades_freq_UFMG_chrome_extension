@@ -98,7 +98,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // check if the user is in the right page
     if (!tab.url.includes("localhost") &&
         !tab.url.includes("sistemas.ufmg.br/diario/frequenciaTurma/frequencia/solicitar/solicitarFrequencia.do") &&
-        !tab.url.includes("sistemas.ufmg.br/diario/notaTurma/notaAvaliacao/solicitar/solicitarNota.do?acao=lancarAvaliacaoCompleta")) {
+        !tab.url.includes("sistemas.ufmg.br/diario/notaTurma/notaAvaliacao/solicitar/solicitarNota.do?acao=lancarAvaliacaoCompleta") &&
+        !tab.url.includes("homepages.dcc.ufmg.br/~hector.azpurua/notas_mock/")) {
 
         document.getElementById('interface-grades').style.display = 'none';
         document.getElementById('interface-frequency').style.display = 'none';

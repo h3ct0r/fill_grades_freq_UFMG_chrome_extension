@@ -5,8 +5,6 @@
     "description": "Fills forms on a specific website using a CSV file.",
     "permissions": [
         "activeTab",
-        "scripting",
-        "storage",
         "commands",
         "tabs"
     ],
@@ -35,9 +33,9 @@
         {
             "matches": [
                 "*://localhost/*",
+                "*://homepages.dcc.ufmg.br/~hector.azpurua/notas_mock/*",
                 "*://sistemas.ufmg.br/diario/notaTurma/notaAvaliacao/solicitar/*",
-                "*://sistemas.ufmg.br/diario/frequenciaTurma/frequencia/solicitar/*",
-                "*://homepages.dcc.ufmg.br/~hector.azpurua/*"
+                "*://sistemas.ufmg.br/diario/frequenciaTurma/frequencia/solicitar/*"
             ],
             "js": [
                 "js/papaparse.min.js",

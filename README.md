@@ -59,6 +59,7 @@ Download this Github project and load it in Chrome using developer mode as an un
 ## Step by step tutorial
 
 Test website at: https://homepages.dcc.ufmg.br/~hector.azpurua/notas_mock
+Test CSV data: https://github.com/h3ct0r/fill_grades_freq_UFMG_chrome_extension/blob/main/test_csv_files/test_grades_10.csv
 
 - *Step 0*: Inside `Diario de Classe`, go to the page `Notas/Lançamento de Notas/Todas as Avaliações` and click on the extension icon
 <div align="center">
