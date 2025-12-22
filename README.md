@@ -1,6 +1,13 @@
 # Fill Grades And Frequency to UFMG's `Diario de Classe`
 ## _A simple way to import your class data into the university grading system using a Chrome Extension_
 
+### Installation <img width="30" height="30" alt="image" src="https://github.com/user-attachments/assets/3bd3c1de-3a2e-4d2d-aa6a-07d8df4886bc" />
+
+The extension is already available for install on Google Chrome web store!
+- https://chromewebstore.google.com/detail/csv-grade-filler-ufmg/bbipopfmfkmmekbaijkpnajpailajgld
+
+### What the Fill Grades And Frequency Extension is?
+
 This project is a JS Chrome Extension that works on certain URL's to allow the option of automatically filling students grades and frequency by directly importing a CSV files with the evaluation and frequency data. 
 
 This project also includes a Google Sheets template to import the users from Moodle and `Diario de Classe`, joining them by name. This template can be used to fill the grades during the semester, and export it to CSV.
