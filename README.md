@@ -46,23 +46,6 @@ This project shares a reference Google Sheets template to use with the plugin an
     Reference Google Sheets template.
 </div>
 
-## How to install
-
-Download this Github project and load it in Chrome using developer mode as an unpacked extension:
-
-- Go to the Extensions page by entering `chrome://extensions` in a new tab. (By design chrome:// URLs are not linkable.)
-    - Alternatively, click the Extensions menu puzzle button and select **Manage Extensions** at the bottom of the menu.
-    - Or, click the Chrome menu, hover over **More Tools**, then select **Extensions**.
-- Enable **Developer Mode** by clicking the toggle switch next to **Developer mode**.
-- Click the **Load unpacked** button and select the extension directory.
-  
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/e805db63-afce-4996-9166-108b12a4675c" alt="Extensions" style="text-align:center; width:25%">
-  <br>
-  Extensions page (`chrome://extensions`)
-</div>
-- Ta-da! The extension has been successfully installed.
-
 ## Step by step tutorial
 
 Test website at: https://homepages.dcc.ufmg.br/~hector.azpurua/notas_mock
@@ -89,6 +72,23 @@ Test CSV data: https://github.com/h3ct0r/fill_grades_freq_UFMG_chrome_extension/
 </div>
 
 - Remember to click the `Processar` button at the bottom of the page to register all grades
+
+## How to install from *source*
+
+Download this Github project and load it in Chrome using developer mode as an unpacked extension:
+
+- Go to the Extensions page by entering `chrome://extensions` in a new tab. (By design chrome:// URLs are not linkable.)
+    - Alternatively, click the Extensions menu puzzle button and select **Manage Extensions** at the bottom of the menu.
+    - Or, click the Chrome menu, hover over **More Tools**, then select **Extensions**.
+- Enable **Developer Mode** by clicking the toggle switch next to **Developer mode**.
+- Click the **Load unpacked** button and select the extension directory.
+  
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e805db63-afce-4996-9166-108b12a4675c" alt="Extensions" style="text-align:center; width:25%">
+  <br>
+  Extensions page (`chrome://extensions`)
+</div>
+- Ta-da! The extension has been successfully installed.
 
 ## License
 
