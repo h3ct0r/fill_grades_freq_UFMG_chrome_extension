@@ -1,10 +1,32 @@
 function getAvHeadersMap() {
-    var parentElement = document.getElementById("notasHead");
-    var avList = parentElement.querySelectorAll('a');
     var avToId = new Map();
-    avList.forEach(function (element, idx) {
-        avToId.set(element.innerText, idx);
-    });
+
+    try {
+        // get list of avaliations from the table header
+        var parentElement = document.getElementById("notasHead");
+        var avList = parentElement.querySelectorAll('a');
+
+        // get the first element 
+        var tblAv = document.getElementById("tabelaAvaliacoes");
+        var trList = tblAv.querySelectorAll('tr');
+        var inputList = trList[0].querySelectorAll('input');
+
+        const avIdRegex = /^@.*_(\d)$/;
+        var avSize = avList.length;
+
+        for (let i = 0; i < av_size; i++) {
+            var avElement = avList[i];
+            var avText = avElement.innerText
+            var inputElement = inputList[i];
+            const result = inputElement.id.match(av_id_regex);
+
+            avToId.set(avText, result[1]);
+            console.log(avText, result[1]);
+        }
+    } catch (error) {
+        console.error("[ERROR] Problem parsing page for AV information:", error.message);
+    }
+
     return avToId;
 }
 
