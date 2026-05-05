@@ -4,26 +4,38 @@ function getAvHeadersMap() {
     try {
         // get list of avaliations from the table header
         var parentElement = document.getElementById("notasHead");
+        if (!parentElement) {
+            throw new Error("Element with id 'notasHead' not found");
+        }
+
         var avList = parentElement.querySelectorAll('a');
 
         // get the first element 
         var tblAv = document.getElementById("tabelaAvaliacoes");
+        if (!tblAv) {
+            throw new Error("Element with id 'tabelaAvaliacoes' not found");
+        }
+
         var trList = tblAv.querySelectorAll('tr');
         var inputList = trList[0].querySelectorAll('input');
 
         const avIdRegex = /^@.*_(\d)$/;
         var avSize = avList.length;
 
-        for (let i = 0; i < av_size; i++) {
+        for (let i = 0; i < avSize; i++) {
             var avElement = avList[i];
             var avText = avElement.innerText
             var inputElement = inputList[i];
-            const result = inputElement.id.match(av_id_regex);
+            const result = inputElement.id.match(avIdRegex);
+            if (!result) {
+                throw new Error("avIdRegex: Element with id '" + avIdRegex + "' not found");
+            }
 
             avToId.set(avText, result[1]);
             console.log(avText, result[1]);
         }
     } catch (error) {
+        // @ts-ignore
         console.error("[ERROR] Problem parsing page for AV information:", error.message);
     }
 
