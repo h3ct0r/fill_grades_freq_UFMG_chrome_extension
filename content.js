@@ -69,21 +69,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
         try {
             const csvDataMap = new Map(Object.entries(request.data));
+            const columnsToFill = request.columns || null;
 
             let filledCount = 0;
             let missingFieldsSet = new Set([]);
 
             var avToId = getAvHeadersMap();
             console.log("avToId:", avToId);
-
             console.log("csvDataMap:", csvDataMap);
 
-            // iterate through CSV data
             for (const [matricula, value] of csvDataMap) {
                 console.log(matricula, value);
 
                 var isFound = true;
                 for (var avKeyName in value) {
+                    if (columnsToFill && !columnsToFill.includes(avKeyName)) continue;
                     if (!avToId.has(avKeyName)) continue;
 
                     var avKeyId = avToId.get(avKeyName);
@@ -113,11 +113,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     status: "error",
                     message: "No matching form fields found"
                 });
-            } else if (missingFieldsSet.length > 0) {
+            } else if (missingFieldsSet.size > 0) {
                 // partial success
                 sendResponse({
                     status: "success",
-                    message: `Filled ${filledCount} rows. Could not find: ${missingFieldsSet.length}`
+                    message: `Filled ${filledCount} rows. Could not find: ${missingFieldsSet.size}`
                 });
             } else {
                 // full success
@@ -184,11 +184,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                     status: "error",
                     message: "No matching form fields found"
                 });
-            } else if (missingFieldsSet.length > 0) {
+            } else if (missingFieldsSet.size > 0) {
                 // partial success
                 sendResponse({
                     status: "success",
-                    message: `Filled ${filledCount} rows. Could not find: ${missingFieldsSet.length}`
+                    message: `Filled ${filledCount} rows. Could not find: ${missingFieldsSet.size}`
                 });
             } else {
                 // full success
@@ -203,4 +203,5 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
     }
 
+    return true;
 });
