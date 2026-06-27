@@ -1,5 +1,16 @@
+function isValidMatricula(matricula) {
+    return matricula != null && String(matricula).trim() !== "";
+}
+
+function hasAnyDataValue(row) {
+    return Object.values(row).some(
+        (value) => value != null && String(value).trim() !== ""
+    );
+}
+
 function parseCSV(csvText) {
     var headersCSV = undefined;
+    var skippedCount = 0;
 
     var csvData = Papa.parse(csvText, {
         header: true,
@@ -19,15 +30,27 @@ function parseCSV(csvText) {
 
     const dataMap = csvData.data.reduce((mapAccum, row) => {
         var matricula = row.MATRICULA;
+
+        if (!isValidMatricula(matricula)) {
+            skippedCount++;
+            return mapAccum;
+        }
+
         delete row.MATRICULA;
 
-        mapAccum.set(matricula, row);
+        if (!hasAnyDataValue(row)) {
+            skippedCount++;
+            return mapAccum;
+        }
+
+        mapAccum.set(String(matricula).trim(), row);
         return mapAccum;
     }, new Map());
 
     return {
         "data": dataMap,
-        "headers": headersCSV
+        "headers": headersCSV,
+        "skippedCount": skippedCount
     };
 }
 
@@ -115,11 +138,14 @@ function filterDataByColumns(dataMap, columns) {
     for (const [matricula, row] of dataMap) {
         const filteredRow = {};
         for (const col of columns) {
-            if (row[col] !== undefined && row[col] !== "") {
-                filteredRow[col] = row[col];
+            const value = row[col];
+            if (value !== undefined && value !== null && String(value).trim() !== "") {
+                filteredRow[col] = value;
             }
         }
-        filtered.set(matricula, filteredRow);
+        if (Object.keys(filteredRow).length > 0) {
+            filtered.set(matricula, filteredRow);
+        }
     }
     return filtered;
 }
@@ -231,7 +257,8 @@ function validateParsedCsv({
     parentStep3,
     csvHeaderOkDiv,
     csvElemDescDiv,
-    selectedColumns
+    selectedColumns,
+    skippedCount
 }) {
     const step_status = parentStep2.querySelector('.step-status');
 
@@ -242,7 +269,8 @@ function validateParsedCsv({
         csvElemDescDiv.innerHTML = 0;
         csvElemDescDiv.classList.add("red-color");
         csvElemDescDiv.classList.remove("green-color");
-        throw new Error("CSV vazio ou inválido.");
+        const skipMsg = skippedCount > 0 ? ` (${skippedCount} linha(s) ignorada(s))` : "";
+        throw new Error("CSV vazio ou inválido." + skipMsg);
     }
 
     csvHeaderOkDiv.innerHTML = parsedHeaders.join(", ");
@@ -279,7 +307,12 @@ function validateParsedCsv({
     csvElemDescDiv.classList.remove("red-color");
     step_status.innerHTML = "&#9989;";
     parentStep3.style.display = "block";
-    showStatus("CSV pronto. Colunas selecionadas: " + selectedColumns.join(", "), "success");
+
+    let statusMsg = "CSV pronto. Colunas: " + selectedColumns.join(", ");
+    if (skippedCount > 0) {
+        statusMsg += `. ${skippedCount} linha(s) ignorada(s) (matrícula ou notas vazias).`;
+    }
+    showStatus(statusMsg, "success");
 
     return { parsedData, parsedHeaders, selectedColumns };
 }
@@ -292,6 +325,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     var parsedData = undefined;
     var parsedHeaders = undefined;
     var selectedColumns = [];
+    var skippedCount = 0;
     var headersAV = undefined;
     var pageHeaders = [];
     var currentMode = "grades";
@@ -323,7 +357,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 parentStep3,
                 csvHeaderOkDiv: document.getElementById('csvHeadersOK'),
                 csvElemDescDiv: document.getElementById('csvElementsDesc'),
-                selectedColumns
+                selectedColumns,
+                skippedCount
             });
             persistState();
         } catch (err) {
@@ -342,7 +377,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 parentStep3,
                 csvHeaderOkDiv: document.getElementById('freqCsvHeadersOK'),
                 csvElemDescDiv: document.getElementById('freqCsvElementsDesc'),
-                selectedColumns
+                selectedColumns,
+                skippedCount
             });
             persistState();
         } catch (err) {
@@ -472,6 +508,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             var parseResult = parseCSV(text);
             parsedData = parseResult["data"];
             parsedHeaders = parseResult["headers"];
+            skippedCount = parseResult["skippedCount"] || 0;
 
             renderGradesColumnPicker({
                 listElement: gradesColumnList,
@@ -495,6 +532,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             var parseResult = parseCSV(text);
             parsedData = parseResult["data"];
             parsedHeaders = parseResult["headers"];
+            skippedCount = parseResult["skippedCount"] || 0;
 
             renderFrequencyColumnPicker({
                 listElement: freqColumnList,
