@@ -37,8 +37,13 @@ This project is based upon the developments of:
 
 ## Reference Google Sheets template
 
-This project shares a reference Google Sheets template to use with the plugin and make easier to create the CSV files, however its not required and you can use any way you prefer to generate the CSV files.
+You can use the following website to create a Google Sheets document with all the required data and formats used by this plugin:
+- https://gradesheet.azpurua.com.br/
+
+ Another reference Google Sheets template to make easier to create the CSV file:
 - Link: https://docs.google.com/spreadsheets/d/1uWSjpvj_RxTTfcZLw65nmbQy1QyCrp93ZFVv3f9kufw/edit?usp=sharing
+
+However its not required to use any particular template, you can use any way you prefer to generate the CSV files in the following format.
 
 <div align="center">
     <a href="https://docs.google.com/spreadsheets/d/1uWSjpvj_RxTTfcZLw65nmbQy1QyCrp93ZFVv3f9kufw/edit?usp=sharing" target="_blank">
