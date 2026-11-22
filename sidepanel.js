@@ -95,13 +95,31 @@ function parseCSV(csvText) {
 /**
  * Show a message in the side panel status area.
  * @param {string} msg HTML message to display
- * @param {"success" | "error"} type controls the status styling class
+ * @param {"success" | "error" | "progress"} type controls the status styling class
  */
 function showStatus(msg, type) {
     const statusDiv = document.getElementById('status');
     statusDiv.innerHTML = msg;
     statusDiv.className = type;
     statusDiv.style.display = 'block';
+}
+
+/**
+ * Show a fill in progress in the status area: a count, a percentage and a
+ * progress bar, styled differently from the green "done" summary.
+ * @param {number} done students processed so far
+ * @param {number} total students to process
+ * @param {string} label what is being filled (e.g. "grades")
+ */
+function showProgress(done, total, label) {
+    // Floor so 100% only shows once every student is done.
+    const pct = total > 0 ? Math.floor((done / total) * 100) : 0;
+    showStatus(
+        `Filling ${label}&hellip; ${done} / ${total} (${pct}%)` +
+        `<div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}">` +
+        `<div class="progress-fill" style="width:${pct}%"></div></div>`,
+        "progress"
+    );
 }
 
 const CSV_STORAGE_KEY = "csvState";
@@ -440,6 +458,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     var headersAV = undefined;
     var pageHeaders = [];
     var currentMode = "grades";
+    // Fills currently running, keyed by tab id -> { action, label }. Progress
+    // is only drawn for the tab the panel is showing and only while its entry
+    // exists, so a late message can't overwrite the final summary.
+    var activeFills = new Map();
+
+    /** Disable the fill buttons while the shown tab has a fill running. */
+    function syncFillButtons() {
+        const busy = activeFills.has(tab?.id);
+        document.getElementById('fillGradesBtn').disabled = busy;
+        document.getElementById('fillFreqBtn').disabled = busy;
+    }
+
+    chrome.runtime.onMessage.addListener((msg, sender) => {
+        if (msg?.type !== "fill_progress") return;
+        const tabId = sender.tab?.id;
+        const fill = activeFills.get(tabId);
+        if (!fill || tabId !== tab?.id || msg.action !== fill.action) return;
+        showProgress(msg.done, msg.total, fill.label);
+    });
 
     // Bumped on every refresh; in-flight callbacks from a previous tab compare
     // against it and bail out instead of drawing stale results into the panel.
@@ -629,6 +666,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         tab = activeTab;
+        syncFillButtons();
 
         const savedState = await loadCsvState(tab.url);
         if (token !== refreshToken) return;
@@ -802,8 +840,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                 message.columns = selectedColumns;
             }
 
-            chrome.tabs.sendMessage(tab.id, message, (response) => {
-                if (chrome.runtime.lastError) {
+            const fillTabId = tab.id;
+            if (activeFills.has(fillTabId)) return;
+            activeFills.set(fillTabId, { action, label: mode });
+            syncFillButtons();
+            showProgress(0, filtered.size, mode);
+
+            chrome.tabs.sendMessage(fillTabId, message, (response) => {
+                const lastError = chrome.runtime.lastError;
+                activeFills.delete(fillTabId);
+                syncFillButtons();
+
+                // The panel may have moved to another tab meanwhile; the
+                // summary belongs to the filled tab only.
+                if (tab?.id !== fillTabId) return;
+
+                if (lastError) {
                     showStatus("Error: refresh the page and try again.", "error");
                     return;
                 }
@@ -811,7 +863,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (response && response.status === "success") {
                     showStatus(`Success! ${response.message}.`, "success");
                 } else {
-                    showStatus(`Error: ${response.message}`, "error");
+                    showStatus(`Error: ${response?.message ?? "unknown error"}`, "error");
                 }
             });
         });

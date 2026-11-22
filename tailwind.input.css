@@ -33,6 +33,19 @@
         @apply border-red-200 bg-red-50 text-red-700;
     }
 
+    /* Fill in progress: blue so it can't be mistaken for the green summary. */
+    #status.progress {
+        @apply border-blue-200 bg-blue-50 font-medium text-blue-800;
+    }
+
+    .progress-track {
+        @apply mt-2 h-2 w-full overflow-hidden rounded-full bg-blue-100;
+    }
+
+    .progress-fill {
+        @apply h-full rounded-full bg-blue-600 transition-[width] duration-150;
+    }
+
     /* CSV drop zone; "drag-over" is toggled while a file hovers over it. */
     .drop-zone {
         @apply flex min-h-[92px] w-full flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 px-3 py-4 text-center transition-colors;
