@@ -1,6 +1,6 @@
 {
   "name": "fill-grades-freq-ufmg-chrome-extension",
-  "version": "1.18.0",
+  "version": "1.19.0",
   "private": true,
   "description": "Chrome extension that fills grades and frequency forms on UFMG's Diario de Classe from CSV files.",
   "scripts": {
