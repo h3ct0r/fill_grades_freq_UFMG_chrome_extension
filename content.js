@@ -24,6 +24,22 @@ function isInputEditable(input) {
 }
 
 /**
+ * Tell the side panel how far a fill has progressed. Fire-and-forget: if the
+ * panel is closed there is no receiver, and that must never stop the fill.
+ * @param {string} action the fill action in progress
+ * @param {number} done students processed so far
+ * @param {number} total students that will be processed
+ */
+function reportProgress(action, done, total) {
+    try {
+        chrome.runtime.sendMessage({ type: "fill_progress", action, done, total })
+            .catch(() => { });
+    } catch (e) {
+        // extension context gone (e.g. reloaded); ignore
+    }
+}
+
+/**
  * Build a map of evaluation header text -> numeric AV id by reading the grades
  * table on the page.
  *
@@ -141,9 +157,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
              * many students actually had at least one field filled/blocked.
              */
             async function processLoopAsyncWithDelay() {
-                for (const [matricula, value] of csvDataMap) {
-                    if (!value || Object.keys(value).length === 0) continue;
+                const rows = [...csvDataMap].filter(
+                    ([, value]) => value && Object.keys(value).length > 0);
+                let done = 0;
+                reportProgress(request.action, done, rows.length);
 
+                for (const [matricula, value] of rows) {
                     let studentFilled = 0;
                     let studentBlocked = 0;
                     let studentMissing = 0;
@@ -186,6 +205,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         missingMatriculas.add(matricula);
                     }
 
+                    reportProgress(request.action, ++done, rows.length);
                     await sleep(50);
                 }
             }
@@ -214,6 +234,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         message: message
                     });
                 }
+            }).catch((e) => {
+                sendResponse({ status: "error", message: "[content.js]" + e.toString() });
             });
 
         } catch (e) {
@@ -264,27 +286,32 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
              * named `@<matricula>`, tracking blocked and missing students.
              */
             async function processLoopAsyncWithDelay() {
-                for (const [matricula, value] of csvDataMap) {
-                    var freqValue = value["FREQ"];
-                    if (freqValue == null || String(freqValue).trim() === "") continue;
+                const rows = [...csvDataMap].filter(([, value]) =>
+                    value && value["FREQ"] != null && String(value["FREQ"]).trim() !== "");
+                let done = 0;
+                reportProgress(request.action, done, rows.length);
 
+                for (const [matricula, value] of rows) {
+                    var freqValue = value["FREQ"];
                     var idFreqName = "@" + matricula;
                     var freqByName = document.getElementsByName(idFreqName);
+
+                    var wrote = false;
+
                     if (freqByName.length <= 0) {
                         missingMatriculas.add(matricula);
-                        continue;
-                    }
-
-                    if (!isInputEditable(freqByName[0])) {
+                    } else if (!isInputEditable(freqByName[0])) {
                         blockedMatriculas.add(matricula);
-                        continue;
+                    } else {
+                        filledCount++;
+                        freqByName[0].value = freqValue;
+                        freqByName[0].style.backgroundColor = "lightcyan";
+                        wrote = true;
                     }
 
-                    filledCount++;
-                    freqByName[0].value = freqValue;
-                    freqByName[0].style.backgroundColor = "lightcyan";
-
-                    await sleep(50);
+                    reportProgress(request.action, ++done, rows.length);
+                    // Only pause after a visible write; skipped rows go by instantly.
+                    if (wrote) await sleep(50);
                 }
             }
 
@@ -312,6 +339,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                         message: message
                     });
                 }
+            }).catch((e) => {
+                sendResponse({ status: "error", message: "[content.js]" + e.toString() });
             });
         } catch (e) {
             sendResponse({ status: "error", message: "[content.js]" + e.toString() });
